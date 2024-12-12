@@ -2,7 +2,8 @@
 python tkinter table sample
 <br />
 
-![table_0](https://github.com/user-attachments/assets/302f75bc-97aa-4796-8d0c-215252180720)
 
 <br />
 add exmo info
+<br />
+![table_1](https://github.com/user-attachments/assets/c34b7eb0-847c-4d1c-8d07-6e25f6e6137e)
