@@ -78,6 +78,14 @@ def create_table(rows, columns):
                 # Button for Отчеты
                 button_reports = tk.Button(cell, text="Отчеты", bg="lightyellow", command=open_reports_window)
                 button_reports.pack(expand=True)
+            elif i == 0 and j == 3:  # (1, 4)
+                # Button for Анализ
+                button_analysis = tk.Button(cell, text="Анализ", bg="lightgray", command=lambda: print("Analysis button clicked"))
+                button_analysis.pack(expand=True)
+            elif i == 0 and j == 4:  # (1, 5)
+                # Button for Курсы монет
+                button_currency_rates = tk.Button(cell, text="Курсы монет", bg="lightgray", command=lambda: print("Currency rates button clicked"))
+                button_currency_rates.pack(expand=True)
             else:
                 label = tk.Label(cell, text=f"Cell {i+1},{j+1}", bg="white")
                 label.pack(expand=True)
