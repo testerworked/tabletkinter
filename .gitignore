@@ -1,5 +1,6 @@
 *.iml
 .gradle
+dataBase.json
 /.idea
 /.idea/*
 /__pycache__

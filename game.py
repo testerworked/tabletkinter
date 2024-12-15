@@ -1,14 +1,5 @@
 import tkinter as tk
-from datetime import datetime
-from character import Character
-from tkinter import simpledialog
-import json
-
-# Функции для открытия окон
-import tkinter as tk
-from datetime import datetime
-from character import Character
-import tkinter as tk
+from tkinter import ttk
 from datetime import datetime
 from character import Character
 
@@ -94,8 +85,6 @@ class CryptoInvestorGame:
         self.status_label = tk.Label(self.indicators_frame, text="")
         self.status_label.pack(pady=10)
 
-        #self.update_status()  # Устанавливаем статус персонажа
-
         # Создаем таблицу
         self.create_table(8, 8)
 
@@ -124,13 +113,6 @@ class CryptoInvestorGame:
                     self.time_label = tk.Label(cell, text="", font=("Arial", 15))
                     self.time_label.pack(expand=True)
                     self.update_time()  # Начинаем обновление времени в этом месте
-                elif i == 1 and j == 7:  # Здоровье, сытость и энергия в ячейке (2,8)
-                    self.health_label = tk.Label(cell, text=f"Здоровье: {self.character.health}%")
-                    self.hunger_label = tk.Label(cell, text=f"Сытость: {self.character.hunger}%")
-                    self.energy_label = tk.Label(cell, text=f"Энергия: {self.character.energy}%")
-                    self.health_label.pack(expand=True)
-                    self.hunger_label.pack(expand=True)
-                    self.energy_label.pack(expand=True)
                 elif i == 7 and j == 7:  # Имя, возраст и пол в ячейке (8,8)
                     self.name_label = tk.Label(cell, text=f"Имя: {self.character.name}")
                     self.age_label = tk.Label(cell, text=f"Возраст: {self.character.age}")
@@ -138,14 +120,44 @@ class CryptoInvestorGame:
                     self.name_label.pack(expand=True)
                     self.age_label.pack(expand=True)
                     self.gender_label.pack(expand=True)
+                elif i == 7 and j == 1:  # Здоровье
+                    tk.Label(cell, text="Здоровье:").pack()
+                    self.health_bar = ttk.Progressbar(cell, length=200, mode='determinate')
+                    self.health_bar['value'] = self.character.health
+                    self.health_bar.pack()
+                elif i == 7 and j == 2:  # Сытость
+                    tk.Label(cell, text="Сытость:").pack()
+                    self.hunger_bar = ttk.Progressbar(cell, length=200, mode='determinate')
+                    self.hunger_bar['value'] = self.character.hunger
+                    self.hunger_bar.pack()
+                elif i == 7 and j == 3:  # Энергия
+                    tk.Label(cell, text="Энергия:").pack()
+                    self.energy_bar = ttk.Progressbar(cell, length=200, mode='determinate')
+                    self.energy_bar['value'] = self.character.energy
+                    self.energy_bar.pack()
                 else:
                     label = tk.Label(cell, text=f"Cell {i + 1},{j + 1}", bg="white")
                     label.pack(expand=True)
 
-    def update_status(self):
+        self.update_bars()  # Начинаем обновление индикаторов
+
+    def update_bars(self):
         if self.character:
-            self.status_label.config(text=f"Имя: {self.character.name}, Возраст: {self.character.age}, Пол: {self.character.gender}")
-        self.master.after(1000, self.update_status)
+            self.health_bar['value'] = self.character.health
+            self.hunger_bar['value'] = self.character.hunger
+            self.energy_bar['value'] = self.character.energy
+            
+            # Уменьшаем показатели со временем
+            self.character.health -= 0.1
+            self.character.hunger -= 0.2
+            self.character.energy -= 0.15
+            
+            # Убедимся, что значения не становятся отрицательными
+            self.character.health = max(0, self.character.health)
+            self.character.hunger = max(0, self.character.hunger)
+            self.character.energy = max(0, self.character.energy)
+
+        self.master.after(1000, self.update_bars)  # Обновляем каждые 1000 мс
 
     def update_time(self):
         current_time = datetime.now().strftime('%H:%M:%S')
