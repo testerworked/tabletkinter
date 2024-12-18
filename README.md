@@ -15,4 +15,5 @@ add exmo info
 
 <br>
 
-![screen_main](https://github.com/user-attachments/assets/d2c36666-564b-4fc8-9656-439f7f78e085)
+
+![table_game_0](https://github.com/user-attachments/assets/aa68e2df-dd98-45fe-a4da-f172634cfaeb)
