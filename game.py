@@ -26,9 +26,9 @@ def open_reports_window():
     center_window(reports_window)
 
 def center_window(window):
-    window.update_idletasks() 
-    width = window.winfo_width() if window.winfo_width() > 0 else 500  # Заполняем ширину
-    height = window.winfo_height() if window.winfo_height() > 0 else 300  # Заполняем высоту
+    window.update_idletasks()
+    width = window.winfo_width() if window.winfo_width() > 0 else 500  
+    height = window.winfo_height() if window.winfo_height() > 0 else 300
     
     screen_width = window.winfo_screenwidth()
     screen_height = window.winfo_screenheight()
@@ -69,7 +69,7 @@ class CryptoInvestorGame:
         name = self.name_entry.get()
         age = self.age_entry.get()
         gender = self.gender_var.get()
-        self.character = Character(name, age, gender)
+        self.character = Character(name, age, gender, balance=30000)  # Начальный баланс 30,000 USDT
         self.character.save_to_file()
         
         self.welcome_frame.grid_forget()
@@ -79,19 +79,22 @@ class CryptoInvestorGame:
         self.game_frame = tk.Frame(self.master)
         self.game_frame.grid(row=0, column=0)
 
+        # Убираем индикаторы в отдельный фрейм
         self.indicators_frame = tk.Frame(self.master)
         self.indicators_frame.grid(row=0, column=1, padx=20)
 
-        self.status_label = tk.Label(self.indicators_frame, text="")
-        self.status_label.pack(pady=10)
-
-        # Создаем таблицу
         self.create_table(8, 8)
+
+        # Перемещаем статус лейбл в ячейку (4, 4)
+        self.status_label = tk.Label(self.master, text="", borderwidth=2, relief="groove", width=40, height=4)
+        self.status_label.grid(row=4, column=4, padx=5, pady=5)
+
+        self.update_bars()
 
     def create_table(self, rows, columns):
         for i in range(rows):
             for j in range(columns):
-                cell = tk.Frame(root, width=80, height=30, borderwidth=5, relief="solid", bg="white")
+                cell = tk.Frame(self.master, width=80, height=30, borderwidth=5, relief="solid", bg="white")
                 cell.grid(row=i, column=j, padx=5, pady=5)
 
                 if i == 0 and j == 0:  # Портфель
@@ -103,16 +106,10 @@ class CryptoInvestorGame:
                 elif i == 0 and j == 2:  # Отчеты
                     button_reports = tk.Button(cell, text="Отчеты", bg="lightyellow", command=open_reports_window)
                     button_reports.pack(expand=True)
-                elif i == 0 and j == 3:  # Анализ
-                    button_analysis = tk.Button(cell, text="Анализ", bg="lightgray", command=lambda: print("Анализ"))
-                    button_analysis.pack(expand=True)
-                elif i == 0 and j == 4:  # Курсы монет
-                    button_currency_rates = tk.Button(cell, text="Курсы монет", bg="lightgray", command=lambda: print("Курсы монет"))
-                    button_currency_rates.pack(expand=True)
                 elif i == 0 and j == 7:  # Время в ячейке (1,8)
                     self.time_label = tk.Label(cell, text="", font=("Arial", 15))
                     self.time_label.pack(expand=True)
-                    self.update_time()  # Начинаем обновление времени в этом месте
+                    self.update_time()  
                 elif i == 7 and j == 7:  # Имя, возраст и пол в ячейке (8,8)
                     self.name_label = tk.Label(cell, text=f"Имя: {self.character.name}")
                     self.age_label = tk.Label(cell, text=f"Возраст: {self.character.age}")
@@ -139,7 +136,17 @@ class CryptoInvestorGame:
                     label = tk.Label(cell, text=f"Cell {i + 1},{j + 1}", bg="white")
                     label.pack(expand=True)
 
-        self.update_bars()  # Начинаем обновление индикаторов
+        # Располагаем кнопки в указанных ячейках
+        self.create_buttons()
+
+    def create_buttons(self):
+        # Расположение кнопок на ячейках
+        tk.Button(self.master, text="Изучить", command=self.study_activity).grid(row=2, column=1, padx=5, pady=5)
+        tk.Button(self.master, text="Читать новости", command=self.read_news).grid(row=3, column=1, padx=5, pady=5)
+        tk.Button(self.master, text="Купить еду", command=self.buy_food).grid(row=4, column=1, padx=5, pady=5)
+        tk.Button(self.master, text="Купить компьютер", command=self.buy_computer).grid(row=5, column=1, padx=5, pady=5)
+        tk.Button(self.master, text="Изучить книгу\nоб инвестициях", command=self.study_investment_book).grid(row=2, column=2, padx=5, pady=5)
+        tk.Button(self.master, text="Поспать", command=self.sleep).grid(row=6, column=1, padx=5, pady=5)
 
     def update_bars(self):
         if self.character:
@@ -157,12 +164,45 @@ class CryptoInvestorGame:
             self.character.hunger = max(0, self.character.hunger)
             self.character.energy = max(0, self.character.energy)
 
-        self.master.after(1000, self.update_bars)  # Обновляем каждые 1000 мс
-
+        self.master.after(1000, self.update_bars)
+        
     def update_time(self):
         current_time = datetime.now().strftime('%H:%M:%S')
         self.time_label.config(text=current_time)
         self.master.after(1000, self.update_time)
+
+    def study_activity(self):
+        # Simulate studying which could improve knowledge or skills
+        self.status_label.config(text="Вы изучаете новый материал...")
+
+    def read_news(self):
+        # Simulate reading news which could provide insights
+        self.status_label.config(text="Вы читаете новости о криптовалюте...")
+
+    def buy_food(self):
+        if self.character.balance >= 100: # Assuming food costs 100 USDT
+            self.character.balance -= 100
+            self.character.hunger += 20
+            self.status_label.config(text="Вы купили еду!")
+        else:
+            self.status_label.config(text="Недостаточно средств для покупки еды.")
+
+    def buy_computer(self):
+        if self.character.balance >= 1500: # Assuming a computer costs 1500 USDT
+            self.character.balance -= 1500
+            self.status_label.config(text="Вы купили компьютер!")
+        else:
+            self.status_label.config(text="Недостаточно средств для покупки компьютера.")
+
+    def study_investment_book(self):
+        # Simulate studying an investment book which could improve knowledge
+        self.status_label.config(text="Вы изучаете книгу об инвестициях...")
+
+    def sleep(self):
+        self.character.energy += 30
+        self.status_label.config(text="Вы поспали и восстановили энергию.")
+        if self.character.energy > 100:  # Cap max energy
+            self.character.energy = 100
 
 if __name__ == "__main__":
     root = tk.Tk()
@@ -174,6 +214,6 @@ if __name__ == "__main__":
     screen_height = root.winfo_screenheight()
     x = (screen_width // 2) - (width // 2)
     y = (screen_height // 2) - (height // 2)
-    root.geometry(f'1000x500+{x}+{y}')  # Задаем фиксированные размеры для главного окна
+    root.geometry(f'1000x500+{x}+{y}')  
     game = CryptoInvestorGame(root)
     root.mainloop()

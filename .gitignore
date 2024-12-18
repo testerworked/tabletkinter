@@ -1,6 +1,5 @@
 *.iml
 .gradle
-dataBase.json
 /.idea
 /.idea/*
 /__pycache__
@@ -18,3 +17,8 @@ __pycache__/*
 .externalNativeBuild
 .cxx
 local.properties
+/bin
+/bin/*
+/lib
+/lib/*
+pyvenv.cfg
