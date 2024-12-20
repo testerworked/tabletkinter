@@ -2,6 +2,10 @@ import tkinter as tk
 from tkinter import ttk
 from datetime import datetime
 from character import Character
+from tkinter import messagebox, scrolledtext
+import pandas as pd
+import json
+
 
 # Функции для открытия окон
 def open_portfolio_window():
@@ -10,6 +14,38 @@ def open_portfolio_window():
     label = tk.Label(portfolio_window, text="Это окно портфель", padx=20, pady=20)
     label.pack()
     center_window(portfolio_window)
+
+def analyze_commission():
+    try:
+        # Открываем и загружаем данные из файла data.json
+        with open('data.json', 'r') as file:
+            data = json.load(file)
+
+        # Преобразуем JSON в DataFrame
+        df = pd.DataFrame.from_dict(data, orient='index')
+
+        # Преобразуем столбец commission_taker_percent в числовой формат
+        df['commission_taker_percent'] = pd.to_numeric(df['commission_taker_percent'], errors='coerce')
+
+        # Сортируем DataFrame по commission_taker_percent
+        sorted_df = df.sort_values(by='commission_taker_percent')
+
+        # Создаем новое окно для отображения данных
+        display_window = tk.Toplevel(root)
+        display_window.title("Результаты анализа комиссии")
+
+        # Создаем текстовое поле с прокруткой для вывода данных
+        text_area = scrolledtext.ScrolledText(display_window, wrap=tk.WORD, width=80, height=30)
+        text_area.pack(padx=10, pady=10)
+
+        # Форматируем DataFrame для отображения в текстовом поле
+        text_to_display = sorted_df.to_string(index=True)  # index=True для отображения индекса
+        text_area.insert(tk.END, text_to_display)
+        text_area.configure(state='disabled')  # Делаем текстовое поле только для чтения
+
+    except Exception as e:
+        messagebox.showerror("Ошибка", str(e))
+
 
 def open_trading_window():
     trading_window = tk.Toplevel(root)
@@ -100,6 +136,9 @@ class CryptoInvestorGame:
                 if i == 0 and j == 0:  # Портфель
                     button_portfolio = tk.Button(cell, text="Портфель", bg="lightblue", command=open_portfolio_window)
                     button_portfolio.pack(expand=True)
+                elif i == 1 and j == 0:
+                    analyze_button = tk.Button(cell, text="Проанализировать комиссию", bg="lightgreen", command=analyze_commission)
+                    analyze_button.pack(expand=True)
                 elif i == 0 and j == 1:  # Торговля
                     button_trading = tk.Button(cell, text="Торговля", bg="lightgreen", command=open_trading_window)
                     button_trading.pack(expand=True)
