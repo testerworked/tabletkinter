@@ -189,21 +189,40 @@ class CryptoInvestorGame:
 
     def update_bars(self):
         if self.character:
+            # Обновляем шкалы
             self.health_bar['value'] = self.character.health
             self.hunger_bar['value'] = self.character.hunger
             self.energy_bar['value'] = self.character.energy
             
-            # Уменьшаем показатели со временем
-            self.character.health -= 0.1
-            self.character.hunger -= 0.2
-            self.character.energy -= 0.15
-            
+            # Уменьшаем сытость и энергию по умолчанию
+            if self.character.hunger > 0:
+                self.character.hunger -= 0.2
+            if self.character.energy > 0:
+                self.character.energy -= 0.15
+
             # Убедимся, что значения не становятся отрицательными
-            self.character.health = max(0, self.character.health)
             self.character.hunger = max(0, self.character.hunger)
             self.character.energy = max(0, self.character.energy)
 
+            # Уменьшаем здоровье только если сытость или энергия равны 0
+            if self.character.hunger == 0 or self.character.energy == 0:
+                self.character.health -= 0.1
+
+            # Убедимся, что здоровье не становится отрицательным
+            self.character.health = max(0, self.character.health)
+
+            # Выводим статус в зависимости от текущего состояния
+            if self.character.hunger == 0 and self.character.energy == 0:
+                self.status_label.config(text="Ваш персонаж голоден и устал, здоровье уменьшается.")
+            elif self.character.hunger == 0:
+                self.status_label.config(text="Ваш персонаж голоден, здоровье уменьшается.")
+            elif self.character.energy == 0:
+                self.status_label.config(text="Ваш персонаж устал, здоровье уменьшается.")
+            else:
+                self.status_label.config(text="Ваш персонаж в норме.")
+        
         self.master.after(1000, self.update_bars)
+
         
     def update_time(self):
         current_time = datetime.now().strftime('%H:%M:%S')
