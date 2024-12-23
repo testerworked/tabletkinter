@@ -15,7 +15,8 @@ add exmo info
 
 <br>
 
-![table_tkinter_up](https://github.com/user-attachments/assets/c3db1815-78f4-4b0b-978f-2836925ba372)
+
+![table_game](https://github.com/user-attachments/assets/29469f49-d993-402e-9102-f38278f5bcda)
 
 
 <br>
