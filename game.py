@@ -11,7 +11,7 @@ import json
 def open_portfolio_window():
     portfolio_window = tk.Toplevel(root)
     portfolio_window.title("Портфель")
-    label = tk.Label(portfolio_window, text="Это окно портфель", padx=20, pady=20)
+    label = tk.Label(portfolio_window, text="Монеты в Вашем Портфеле", padx=20, pady=20)
     label.pack()
     center_window(portfolio_window)
 
@@ -50,14 +50,14 @@ def analyze_commission():
 def open_trading_window():
     trading_window = tk.Toplevel(root)
     trading_window.title("Торговля")
-    label = tk.Label(trading_window, text="Это окно торговли", padx=20, pady=20)
+    label = tk.Label(trading_window, text="Настало время торговли...", padx=20, pady=20)
     label.pack()
     center_window(trading_window)
 
 def open_reports_window():
     reports_window = tk.Toplevel(root)
     reports_window.title("Отчеты")
-    label = tk.Label(reports_window, text="Это окно отчеты", padx=20, pady=20)
+    label = tk.Label(reports_window, text="Изучите последние отчеты по Вашему портфелю", padx=20, pady=20)
     label.pack()
     center_window(reports_window)
 
@@ -145,10 +145,13 @@ class CryptoInvestorGame:
                 elif i == 0 and j == 2:  # Отчеты
                     button_reports = tk.Button(cell, text="Отчеты", bg="lightyellow", command=open_reports_window)
                     button_reports.pack(expand=True)
-                elif i == 0 and j == 7:  # Время в ячейке (1,8)
+                elif i == 0 and j == 7:
                     self.time_label = tk.Label(cell, text="", font=("Arial", 15))
                     self.time_label.pack(expand=True)
                     self.update_time()  
+                elif  i == 1 and j == 7: 
+                    exit_button = tk.Button(self.master, text="Выход", command=self.master.quit)
+                    exit_button.grid(row=1, column=7, padx=5, pady=5)
                 elif i == 7 and j == 7:  # Имя, возраст и пол в ячейке (8,8)
                     self.name_label = tk.Label(cell, text=f"Имя: {self.character.name}")
                     self.age_label = tk.Label(cell, text=f"Возраст: {self.character.age}")
