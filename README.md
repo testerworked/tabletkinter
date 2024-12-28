@@ -16,10 +16,21 @@ add exmo info
 <br>
 
 
-![table_game](https://github.com/user-attachments/assets/29469f49-d993-402e-9102-f38278f5bcda)
+![main_window0](https://github.com/user-attachments/assets/84dcabd1-b623-4f8e-b3d8-95d914815546)
 
 
 <br>
 check pandas lib
 
 ![exmo_comission](https://github.com/user-attachments/assets/6a2f7cf8-a80d-4152-9fad-713d9df0006b)
+
+<br>
+
+trading window
+
+![trading_window0](https://github.com/user-attachments/assets/74d665fe-eac8-45eb-9180-71ab1f70b7a2)
+
+<br>
+
+![trading_window1](https://github.com/user-attachments/assets/f69f5f95-abc0-46fd-bed7-87d3fd91947b)
+
