@@ -5,7 +5,7 @@ from character import Character
 from tkinter import messagebox, scrolledtext
 import pandas as pd
 import json
-
+import random
 
 # Функции для открытия окон
 def open_portfolio_window():
@@ -17,42 +17,24 @@ def open_portfolio_window():
 
 def analyze_commission():
     try:
-        # Открываем и загружаем данные из файла data.json
         with open('data.json', 'r') as file:
             data = json.load(file)
 
-        # Преобразуем JSON в DataFrame
         df = pd.DataFrame.from_dict(data, orient='index')
-
-        # Преобразуем столбец commission_taker_percent в числовой формат
         df['commission_taker_percent'] = pd.to_numeric(df['commission_taker_percent'], errors='coerce')
-
-        # Сортируем DataFrame по commission_taker_percent
         sorted_df = df.sort_values(by='commission_taker_percent')
 
-        # Создаем новое окно для отображения данных
         display_window = tk.Toplevel(root)
         display_window.title("Результаты анализа комиссии")
-
-        # Создаем текстовое поле с прокруткой для вывода данных
         text_area = scrolledtext.ScrolledText(display_window, wrap=tk.WORD, width=80, height=30)
         text_area.pack(padx=10, pady=10)
 
-        # Форматируем DataFrame для отображения в текстовом поле
-        text_to_display = sorted_df.to_string(index=True)  # index=True для отображения индекса
+        text_to_display = sorted_df.to_string(index=True)
         text_area.insert(tk.END, text_to_display)
-        text_area.configure(state='disabled')  # Делаем текстовое поле только для чтения
+        text_area.configure(state='disabled')
 
     except Exception as e:
         messagebox.showerror("Ошибка", str(e))
-
-
-def open_trading_window():
-    trading_window = tk.Toplevel(root)
-    trading_window.title("Торговля")
-    label = tk.Label(trading_window, text="Настало время торговли...", padx=20, pady=20)
-    label.pack()
-    center_window(trading_window)
 
 def open_reports_window():
     reports_window = tk.Toplevel(root)
@@ -105,7 +87,7 @@ class CryptoInvestorGame:
         name = self.name_entry.get()
         age = self.age_entry.get()
         gender = self.gender_var.get()
-        self.character = Character(name, age, gender, balance=30000)  # Начальный баланс 30,000 USDT
+        self.character = Character(name, age, gender, balance=30000)
         self.character.save_to_file()
         
         self.welcome_frame.grid_forget()
@@ -115,13 +97,10 @@ class CryptoInvestorGame:
         self.game_frame = tk.Frame(self.master)
         self.game_frame.grid(row=0, column=0)
 
-        # Убираем индикаторы в отдельный фрейм
         self.indicators_frame = tk.Frame(self.master)
         self.indicators_frame.grid(row=0, column=1, padx=20)
 
         self.create_table(8, 8)
-
-        # Перемещаем статус лейбл в ячейку (4, 4)
         self.status_label = tk.Label(self.master, text="", borderwidth=2, relief="groove", width=40, height=4)
         self.status_label.grid(row=4, column=4, padx=5, pady=5)
 
@@ -140,7 +119,7 @@ class CryptoInvestorGame:
                     analyze_button = tk.Button(cell, text="Проанализировать комиссию", bg="lightgreen", command=analyze_commission)
                     analyze_button.pack(expand=True)
                 elif i == 0 and j == 1:  # Торговля
-                    button_trading = tk.Button(cell, text="Торговля", bg="lightgreen", command=open_trading_window)
+                    button_trading = tk.Button(cell, text="Торговля", bg="lightgreen", command=self.open_trading_window)
                     button_trading.pack(expand=True)
                 elif i == 0 and j == 2:  # Отчеты
                     button_reports = tk.Button(cell, text="Отчеты", bg="lightyellow", command=open_reports_window)
@@ -149,7 +128,7 @@ class CryptoInvestorGame:
                     self.time_label = tk.Label(cell, text="", font=("Arial", 15))
                     self.time_label.pack(expand=True)
                     self.update_time()  
-                elif  i == 1 and j == 7: 
+                elif  i == 1 and j == 7:  # Кнопка выхода
                     exit_button = tk.Button(self.master, text="Выход", command=self.master.quit)
                     exit_button.grid(row=1, column=7, padx=5, pady=5)
                 elif i == 7 and j == 7:  # Имя, возраст и пол в ячейке (8,8)
@@ -174,15 +153,16 @@ class CryptoInvestorGame:
                     self.energy_bar = ttk.Progressbar(cell, length=200, mode='determinate')
                     self.energy_bar['value'] = self.character.energy
                     self.energy_bar.pack()
+                elif i == 0 and j == 6:  # Баланс
+                    self.balance_label = tk.Label(cell, text=f"Баланс: {self.character.balance:.2f} USDT")
+                    self.balance_label.pack(expand=True)
                 else:
                     label = tk.Label(cell, text=f"Cell {i + 1},{j + 1}", bg="white")
                     label.pack(expand=True)
 
-        # Располагаем кнопки в указанных ячейках
         self.create_buttons()
 
     def create_buttons(self):
-        # Расположение кнопок на ячейках
         tk.Button(self.master, text="Изучить", command=self.study_activity).grid(row=2, column=1, padx=5, pady=5)
         tk.Button(self.master, text="Читать новости", command=self.read_news).grid(row=3, column=1, padx=5, pady=5)
         tk.Button(self.master, text="Купить еду", command=self.buy_food).grid(row=4, column=1, padx=5, pady=5)
@@ -190,31 +170,60 @@ class CryptoInvestorGame:
         tk.Button(self.master, text="Изучить книгу\nоб инвестициях", command=self.study_investment_book).grid(row=2, column=2, padx=5, pady=5)
         tk.Button(self.master, text="Поспать", command=self.sleep).grid(row=6, column=1, padx=5, pady=5)
 
+    def open_trading_window(self):
+        trading_window = tk.Toplevel(self.master)
+        trading_window.title("Торговля")
+
+        label = tk.Label(trading_window, text="Настало время торговли...", padx=20, pady=20)
+        label.pack()
+
+        start_button = tk.Button(trading_window, text="Начать торговлю", command=self.start_trading)
+        start_button.pack(pady=10)
+
+        end_button = tk.Button(trading_window, text="Завершить торговлю", command=self.end_trading)
+        end_button.pack(pady=10)
+
+        center_window(trading_window)
+
+    def start_trading(self):
+        self.status_label.config(text="Торговля началась! Анализируем рынок...")
+
+    def end_trading(self):
+        result = random.choice(["success", "failure"])
+        amount = random.randint(1, 1000)
+
+        if result == "success":
+            self.character.balance += amount
+            message = f"Торговля прошла успешно! Вы заработали {amount}. Новый баланс: {self.character.balance:.2f} USDT."
+        else:
+            self.character.balance -= amount
+            message = f"Торговля прошла не успешно. Вы потеряли {amount}. Новый баланс: {self.character.balance:.2f} USDT."
+
+        messagebox.showinfo("Результат торговли", message)
+        self.status_label.config(text="Торговля завершена.")
+        
+        self.balance_label.config(text=f"Баланс: {self.character.balance:.2f} USDT")  # Обновление отображения
+        self.character.save_to_file()  # Сохраняем обновленный баланс в файл
+
     def update_bars(self):
         if self.character:
-            # Обновляем шкалы
             self.health_bar['value'] = self.character.health
             self.hunger_bar['value'] = self.character.hunger
             self.energy_bar['value'] = self.character.energy
             
-            # Уменьшаем сытость и энергию по умолчанию
             if self.character.hunger > 0:
                 self.character.hunger -= 0.2
             if self.character.energy > 0:
                 self.character.energy -= 0.15
 
-            # Убедимся, что значения не становятся отрицательными
             self.character.hunger = max(0, self.character.hunger)
             self.character.energy = max(0, self.character.energy)
 
-            # Уменьшаем здоровье только если сытость или энергия равны 0
             if self.character.hunger == 0 or self.character.energy == 0:
                 self.character.health -= 0.1
 
-            # Убедимся, что здоровье не становится отрицательным
             self.character.health = max(0, self.character.health)
 
-            # Выводим статус в зависимости от текущего состояния
             if self.character.hunger == 0 and self.character.energy == 0:
                 self.status_label.config(text="Ваш персонаж голоден и устал, здоровье уменьшается.")
             elif self.character.hunger == 0:
@@ -226,43 +235,41 @@ class CryptoInvestorGame:
         
         self.master.after(1000, self.update_bars)
 
-        
     def update_time(self):
         current_time = datetime.now().strftime('%H:%M:%S')
         self.time_label.config(text=current_time)
         self.master.after(1000, self.update_time)
 
     def study_activity(self):
-        # Simulate studying which could improve knowledge or skills
         self.status_label.config(text="Вы изучаете новый материал...")
 
     def read_news(self):
-        # Simulate reading news which could provide insights
         self.status_label.config(text="Вы читаете новости о криптовалюте...")
 
     def buy_food(self):
-        if self.character.balance >= 100: # Assuming food costs 100 USDT
+        if self.character.balance >= 100:
             self.character.balance -= 100
             self.character.hunger += 20
             self.status_label.config(text="Вы купили еду!")
+            self.balance_label.config(text=f"Баланс: {self.character.balance:.2f} USDT")  # Обновление отображения
         else:
             self.status_label.config(text="Недостаточно средств для покупки еды.")
 
     def buy_computer(self):
-        if self.character.balance >= 1500: # Assuming a computer costs 1500 USDT
+        if self.character.balance >= 1500:
             self.character.balance -= 1500
             self.status_label.config(text="Вы купили компьютер!")
+            self.balance_label.config(text=f"Баланс: {self.character.balance:.2f} USDT")  # Обновление отображения
         else:
             self.status_label.config(text="Недостаточно средств для покупки компьютера.")
 
     def study_investment_book(self):
-        # Simulate studying an investment book which could improve knowledge
         self.status_label.config(text="Вы изучаете книгу об инвестициях...")
 
     def sleep(self):
         self.character.energy += 30
         self.status_label.config(text="Вы поспали и восстановили энергию.")
-        if self.character.energy > 100:  # Cap max energy
+        if self.character.energy > 100:
             self.character.energy = 100
 
 if __name__ == "__main__":
