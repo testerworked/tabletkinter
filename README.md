@@ -26,10 +26,14 @@ add exmo info
 <br>
 
 
-![main_window0](https://github.com/user-attachments/assets/84dcabd1-b623-4f8e-b3d8-95d914815546)
-
+![main_window_1](https://github.com/user-attachments/assets/9ee1fcb3-fa3c-4b71-a8eb-3538adcd01b2)
 
 <br>
+
+![game_rating](https://github.com/user-attachments/assets/ac64eb68-d696-4499-921f-78edd5d5bce6)
+
+<br>
+
 check pandas lib
 
 ![exmo_comission](https://github.com/user-attachments/assets/6a2f7cf8-a80d-4152-9fad-713d9df0006b)
