@@ -9,6 +9,7 @@ import random
 from tkinter import ttk, messagebox
 from datetime import datetime
 import random
+import subprocess 
 
 class Character:
     def __init__(self, name, age, gender, balance=30000):
@@ -101,6 +102,9 @@ class CryptoInvestorGame:
                     self.time_label = tk.Label(cell, text="", font=("Arial", 15))
                     self.time_label.pack(expand=True)
                     self.update_time()
+                elif i == 1 and j == 0:  # New Button to Run game_coin.py
+                    run_game_button = tk.Button(cell, text="Запустить Game", command=self.run_game_coin)
+                    run_game_button.pack(expand=True)
                 elif i == 1 and j == 7:  # Кнопка выхода
                     exit_button = tk.Button(self.master, text="Выход", command=self.master.quit)
                     exit_button.grid(row=1, column=7, padx=5, pady=5)
@@ -142,6 +146,13 @@ class CryptoInvestorGame:
         tk.Button(self.master, text="Купить компьютер", command=self.buy_computer).grid(row=5, column=1, padx=5, pady=5)
         tk.Button(self.master, text="Изучить книгу\nоб инвестициях", command=self.study_investment_book).grid(row=2, column=2, padx=5, pady=5)
         tk.Button(self.master, text="Поспать", command=self.sleep).grid(row=6, column=1, padx=5, pady=5)
+
+    def run_game_coin(self):
+        try:
+            # This will run the game_coin.py script using the Python interpreter
+            subprocess.Popen(["python", "game_coin.py"])
+        except Exception as e:
+            messagebox.showerror("Ошибка", f"Не удалось запустить игру: {e}")
 
     def open_portfolio_window(self):
         portfolio_window = tk.Toplevel(self.master)

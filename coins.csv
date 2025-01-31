@@ -1,0 +1,4 @@
+id,name,price,rating,path
+1,Bitcoin,50000.0,3,images/bitcoin.png
+2,Ethereum,4000.0,3,images/ethereum.png
+3,Dogecoin,0.5,3,images/dogecoin.png
