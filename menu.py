@@ -1,8 +1,14 @@
 import tkinter as tk
 from tkinter import messagebox
+import subprocess
 
 def new_game():
     messagebox.showinfo("New Game", "Starting a new game...")
+    script_to_run = 'game_0.py'
+    try:
+        subprocess.run(['python', script_to_run], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f'Error occurred while running the script: {e}')
 
 def continue_playing():
     messagebox.showinfo("Continue Playing", "Continuing the last game...")
