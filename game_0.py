@@ -142,8 +142,8 @@ class CryptoInvestorGame:
     def create_buttons(self):
         tk.Button(self.master, text="Изучить", command=self.study_activity).grid(row=2, column=1, padx=5, pady=5)
         tk.Button(self.master, text="Читать новости", command=self.read_news).grid(row=3, column=1, padx=5, pady=5)
-        tk.Button(self.master, text="Купить еду", command=self.buy_food).grid(row=4, column=1, padx=5, pady=5)
-        tk.Button(self.master, text="Купить компьютер", command=self.buy_computer).grid(row=5, column=1, padx=5, pady=5)
+        tk.Button(self.master, text="Покушать хорошо!", command=self.buy_food).grid(row=4, column=1, padx=5, pady=5)
+        tk.Button(self.master, text="Арендовать сервер для стейкинга", command=self.buy_computer).grid(row=5, column=1, padx=5, pady=5)
         tk.Button(self.master, text="Изучить книгу\nоб инвестициях", command=self.study_investment_book).grid(row=2, column=2, padx=5, pady=5)
         tk.Button(self.master, text="Поспать", command=self.sleep).grid(row=6, column=1, padx=5, pady=5)
 
