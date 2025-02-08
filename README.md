@@ -30,7 +30,8 @@ add exmo info
 <br>
 
 
-![main_window_1](https://github.com/user-attachments/assets/9ee1fcb3-fa3c-4b71-a8eb-3538adcd01b2)
+![game_main_up](https://github.com/user-attachments/assets/c5a6a6a0-42db-4a10-a8a7-1488ce6632f3)
+
 
 <br>
 
