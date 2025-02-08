@@ -9,8 +9,12 @@ tabletkinter
 Его цель — построить свою криптоимперию, инвестируя в различные блокчейн-проекты, создавая свои токены,
 управляя майнинг-фермами и участвуя в глобальных экономических событиях.
 <br>
-python tkinter table sample
+game menu
 <br />
+
+<br>
+
+![menu_0](https://github.com/user-attachments/assets/5c628cb2-2604-4b4e-a3e5-9b987e2c395c)
 
 
 <br />
