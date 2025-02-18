@@ -1,5 +1,5 @@
-# Crypto Empire: Rise to the Moon
-tabletkinter
+# Crypto Empire: Симулятор криптоинвестора
+
 <br />
 Сюжет
 <br>
