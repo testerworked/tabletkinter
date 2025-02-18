@@ -22,6 +22,10 @@ add exmo info
 <br />
 
 
+<br>
+
+![smart_contract](https://github.com/user-attachments/assets/6cc8ec9e-5bbb-4213-97d0-274a33511f4e)
+
 
 <br>
 
