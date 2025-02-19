@@ -108,6 +108,9 @@ class CryptoInvestorGame:
                 elif i == 1 and j == 7:  # Кнопка выхода
                     exit_button = tk.Button(self.master, text="Выход", command=self.master.quit)
                     exit_button.grid(row=1, column=7, padx=5, pady=5)
+                elif i == 2 and j == 7:  # Кнопка сохранить
+                    save_button = tk.Button(self.master, text="Сохранить", command=self.master.quit)
+                    save_button.grid(row=2, column=7, padx=5, pady=5)
                 elif i == 7 and j == 7:  # Имя, возраст и пол
                     self.name_label = tk.Label(cell, text=f"Имя: {self.character.name}")
                     self.age_label = tk.Label(cell, text=f"Возраст: {self.character.age}")
