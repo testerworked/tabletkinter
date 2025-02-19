@@ -13,6 +13,12 @@ game menu
 <br />
 
 <br>
+Main UI
+
+![update_main_ui](https://github.com/user-attachments/assets/49521167-69f2-43d7-bb13-6bf1f0e80f65)
+
+
+<br>
 
 ![menu_0](https://github.com/user-attachments/assets/5c628cb2-2604-4b4e-a3e5-9b987e2c395c)
 
@@ -30,11 +36,6 @@ add exmo info
 <br>
 
 ![game_0](https://github.com/user-attachments/assets/9d17d9f6-acc7-40fd-937e-2d8a62895eff)
-
-<br>
-
-
-![game_main_up](https://github.com/user-attachments/assets/c5a6a6a0-42db-4a10-a8a7-1488ce6632f3)
 
 
 <br>
