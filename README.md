@@ -26,6 +26,11 @@ game menu
 Используем графики для отображения изменения цен.
 
 <br>
+
+![image](https://github.com/user-attachments/assets/4d048b67-6529-4972-ab48-0120eec24dbf)
+
+<br>
+
 Main UI
 
 ![update_main_ui](https://github.com/user-attachments/assets/49521167-69f2-43d7-bb13-6bf1f0e80f65)
