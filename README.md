@@ -30,6 +30,13 @@ game menu
 ![image](https://github.com/user-attachments/assets/4d048b67-6529-4972-ab48-0120eec24dbf)
 
 <br>
+Visualisation
+<br>
+
+![image](https://github.com/user-attachments/assets/68efdb4c-30e7-40c2-90ad-5352c2f1e119)
+
+<br>
+
 
 Main UI
 
